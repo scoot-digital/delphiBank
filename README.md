@@ -67,104 +67,60 @@ The following tests are used to ensure the proper functionality for the generati
 
 The following classes were designed for the bank and its accounts.
 
-<table class="table-class-diagram">
-    <thead>
-        <tr>
-            <th colspan="3">Bank</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="tg-o5vb">-</td>
-            <td class="tg-o5vb">accounts</td>
-            <td class="tg-o5vb">account[]</td>
-        </tr>
-        <tr>
-            <td class="tg-73oq">+</td>
-            <td class="tg-73oq">getAccounts()</td>
-            <td class="tg-73oq">account[]</td>
-        </tr>
-        <tr>
-            <td class="tg-73oq">+</td>
-            <td class="tg-73oq">createAccount()</td>
-            <td class="tg-73oq">boolean</td>
-        </tr>
-        <tr>
-            <td class="tg-73oq">+</td>
-            <td class="tg-73oq">getStatement(_accountNumber : int)</td>
-            <td class="tg-73oq">account</td>
-        </tr>
-        <tr>
-            <td class="tg-73oq">+</td>
-            <td class="tg-73oq">deposit(_accountNumber : int, _amount : int)</td>
-            <td class="tg-73oq">boolean</td>
-        </tr>
-        <tr>
-            <td class="tg-73oq">+</td>
-            <td class="tg-73oq">withdrawal(_accountNumber : int, _amount : int)</td>
-            <td class="tg-73oq">boolean</td>
-        </tr>
-    </tbody>
-</table>
-
-<table class="table-class-diagram">
-    <thead>
-        <tr>
-            <th colspan="3">Bank</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="tg-o5vb">-</td>
-            <td class="tg-o5vb">accounts</td>
-            <td class="tg-o5vb">account[]</td>
-        </tr>
-        <tr>
-            <td class="tg-73oq">+</td>
-            <td class="tg-73oq">getAccounts()</td>
-            <td class="tg-73oq">account[]</td>
-        </tr>
-        <tr>
-            <td class="tg-73oq">+</td>
-            <td class="tg-73oq">createAccount()</td>
-            <td class="tg-73oq">boolean</td>
-        </tr>
-        <tr>
-            <td class="tg-73oq">+</td>
-            <td class="tg-73oq">getStatement(_accountNumber : int)</td>
-            <td class="tg-73oq">account</td>
-        </tr>
-        <tr>
-            <td class="tg-73oq">+</td>
-            <td class="tg-73oq">deposit(_accountNumber : int, _amount : int)</td>
-            <td class="tg-73oq">boolean</td>
-        </tr>
-        <tr>
-            <td class="tg-73oq">+</td>
-            <td class="tg-73oq">withdrawal(_accountNumber : int, _amount : int)</td>
-            <td class="tg-73oq">boolean</td>
-        </tr>
-    </tbody>
-</table>
-
-# Class Model Diagram PlantUML Test
-```plantuml
-@startuml
-class Bank {
-  - accounts: account[]
-
-  + getAccounts(): account[]
-  + createAccount(): boolean
-  + getStatement(_accountNumber: int): account
-  + deposit(_accountNumber: int, _amount: int): boolean
-  + withdrawal(_accountNumber: int, _amount: int): boolean
-}
-
-class account {
-  - accountNumber: int
-  - balance: int
-}
-
-Bank "1" *-- "*" account
-@enduml
-
+```mermaid
+classDiagram
+    class Bank{
+        -customers Customer[]
+        -accounts Account[]
+        +getCustomers() Customer[]
+        +getAccounts() Account[]
+        +getcustomer(_customerID: int) Customer
+        +getStatement(_accountNumber : int) Account
+        +createAccount(_customerID: int) boolean
+        +deposit(_accountNumber : int, _amount : int) boolean
+        +withdrawal(_accountNumber : int, _amount : int) boolean
+        +toString() string
+    }
+    class Customer{
+        -customerID int
+        -name string
+        -phone int
+        -accounts Account[]
+        +getCustomerID() int
+        +getName() string
+        +getPhone() int
+        +getaccounts() Account[]
+        +toString() string
+    }
+    class Account{
+        -accountNumber int
+        -accountOwnerID int
+        -transactionHistory Transaction[]
+        +getAccountOwner() Customer
+        +toString() string
+    }
+    class Transaction{
+        -transactionID int
+        -date date
+        -account Account
+        -type TransactionType
+        -amount int
+        -status string
+        +getTransactionID() int
+        +getDate() date
+        +getAccount() Account
+        +getType() TransactionType
+        +getAmount() int
+        +getStatus() string
+        +toString() string
+    }
+    class TransactionType {
+        deposit
+        withdrawal
+    }
+    Bank "1" -- "0..*" Customer
+    Bank "1" -- "0..*" Account
+    Account "1..*" --> "1" Customer
+    Transaction "1..*" --> "1" Account
+    TransactionType "1" --> "0..*" Transaction
+```
