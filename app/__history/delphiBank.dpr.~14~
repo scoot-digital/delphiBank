@@ -1,0 +1,48 @@
+program delphiBank;
+
+{$APPTYPE CONSOLE}
+
+{$R *.res}
+
+//  Import required units
+uses
+  System.SysUtils,
+  Tests in 'Tests.pas';
+
+{
+  Start a new interaction with the user, asking what they would like to do
+  UserInput (string) - represents what the user would like to do
+}
+procedure NewInteraction();
+
+var
+UserInput : string;
+
+begin
+
+  Writeln('What would you like to do?');
+  Writeln('(1 - Create an account, 2 - Make a deposit, 3 - Make a withdrawal, 4 - Generate a statement, Q - Quit application)');
+
+  Readln(UserInput);
+
+end;
+
+//  Main program loop
+begin
+
+  try
+
+    //  Greet the user
+    GreetUser();
+
+    //  Begin program main loop
+    NewInteraction();
+
+  except
+
+    on E: Exception do
+      Writeln(E.ClassName, ': ', E.Message);
+
+  end;
+
+end.

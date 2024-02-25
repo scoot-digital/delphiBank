@@ -1,0 +1,23 @@
+{
+  Tests used to ensure correct functioning of program before commencing first interaction with user
+}
+
+unit Tests;
+
+//  Public functions, variables etc.
+interface
+
+  procedure GreetUser();
+
+
+implementation
+
+    procedure GreetUser();
+
+    begin
+
+           Writeln('Welcome to delphiBank');
+
+    end;
+
+end.

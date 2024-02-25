@@ -1,0 +1,28 @@
+{
+  Test unit
+  Used to ensure correct functioning of program before commencing first interaction with user
+}
+unit Tests;
+
+
+//  Public functions, variables etc.
+interface
+  procedure GreetUser();
+
+
+//  Unit logic
+implementation
+
+    {
+      Greet the user
+    }
+    procedure GreetUser();
+
+    begin
+
+          //  Greet the user
+          Writeln('Welcome to delphiBank');
+
+    end;
+
+end.

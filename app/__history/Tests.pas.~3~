@@ -1,0 +1,12 @@
+unit Tests;
+
+interface
+
+var
+  UserInput : string;
+
+implementation
+
+    Writeln('Welcome to delphiBank');
+
+end.

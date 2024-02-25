@@ -1,0 +1,19 @@
+unit Tests;
+
+interface
+
+  procedure GreetUser();
+
+
+
+implementation
+
+    procedure GreetUser();
+
+    begin
+
+           Writeln('Welcome to delphiBank');
+
+    end;
+
+end.

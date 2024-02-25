@@ -7,10 +7,10 @@
 - [Introduction](#introduction)
 - [Design](#design)
   - [Unit Tests](#unit-tests)
-    - [Create an account](#create-an-account)
+    - [Create an Account](#create-an-account)
     - [Make a Deposit](#make-a-deposit)
     - [Make a Withdrawal](#make-a-withdrawal)
-    - [Generate a mini statement](#generate-a-mini-statement)
+    - [Generate a Mini Statement](#generate-a-mini-statement)
   - [Application Class Models](#application-class-models)
 - [Development](#development)
 - [Outcome](#outcome)
@@ -52,7 +52,7 @@ The purposes of this task were to test if I can:
 
 The following tests were devised to ensure the proper functionality of the banking system.
 
-#### Create an account
+#### Create an Account
 
 |Test No.|Description|Test Instructions|Expected Result|Status|
 |---|---|---|---|---|
@@ -75,7 +75,7 @@ The following tests were devised to ensure the proper functionality of the banki
 |2|Ensure funds cannot be withdrawn from non-existent accounts|Attempt to make a withdrawal from an account that doesn't exist|The withdrawal should be denied|Pass or Fail|
 |3|Ensure only funds in postive numbers can be withdrawn|Attempt to make a withdrawal from an account using a number equal to or less than 0|The withdrawal should be denied|Pass or Fail|
 
-#### Generate a mini statement
+#### Generate a Mini Statement
 
 |Test No.|Description|Test Instructions|Expected Result|Status|
 |---|---|---|---|---|
