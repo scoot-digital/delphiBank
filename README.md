@@ -23,7 +23,7 @@ When developing this application, the following two pascal units were created:
 1. The [test unit](#unit-tests)
 2. An [Object-oriented class model](#application-class-models) for the bank and its accounts
 
-## [Unit Tests]
+## Unit Tests
 
 ### Create an account
 
@@ -61,52 +61,45 @@ The following tests are used to ensure the proper functionality for the generati
 |Test No.|Description|Test Instructions|Expected Result|Status|
 |---|---|---|---|---|
 |1|Ensure statements are successfully generated|Generate a statement for an account|A statement should be generated|Pass or Fail|
-|2|Ensure statements cannot be created for non-existent accounts|Generate a statement for an account that doesn't exist|Generation of the statement should be denied|Pass or Fail
+|2|Ensure statements cannot be created for non-existent accounts|Generate a statement for an account that doesn't exist|Generation of the statement should be denied|Pass or Fail|
 
-## [Application Class Models]
+## Application Class Models
 
 The following classes were designed for the bank and its accounts.
-
-<style type="text/css">
-    .table-class-diagram{border-collapse:collapse;border-spacing:0; border:1pt solid; display:inline-block; margin-right:2pt;}
-    .table-class-diagram .align-center{text-align:center;}
-    .border-bottom-strong{border-bottom:1pt solid;}
-    .border-bottom-none{border-bottom:none;}
-</style>
 
 <table class="table-class-diagram">
     <thead>
         <tr>
-            <th class="align-center" colspan="3">Bank</th>
+            <th colspan="3">Bank</th>
         </tr>
     </thead>
     <tbody>
-        <tr class="border-bottom-strong">
+        <tr>
             <td class="tg-o5vb">-</td>
             <td class="tg-o5vb">accounts</td>
             <td class="tg-o5vb">account[]</td>
         </tr>
-        <tr class="border-bottom-none">
+        <tr>
             <td class="tg-73oq">+</td>
             <td class="tg-73oq">getAccounts()</td>
             <td class="tg-73oq">account[]</td>
         </tr>
-        <tr class="border-bottom-none">
+        <tr>
             <td class="tg-73oq">+</td>
             <td class="tg-73oq">createAccount()</td>
             <td class="tg-73oq">boolean</td>
         </tr>
-        <tr class="border-bottom-none">
+        <tr>
             <td class="tg-73oq">+</td>
             <td class="tg-73oq">getStatement(_accountNumber : int)</td>
             <td class="tg-73oq">account</td>
         </tr>
-        <tr class="border-bottom-none">
+        <tr>
             <td class="tg-73oq">+</td>
             <td class="tg-73oq">deposit(_accountNumber : int, _amount : int)</td>
             <td class="tg-73oq">boolean</td>
         </tr>
-        <tr class="border-bottom-none">
+        <tr>
             <td class="tg-73oq">+</td>
             <td class="tg-73oq">withdrawal(_accountNumber : int, _amount : int)</td>
             <td class="tg-73oq">boolean</td>
@@ -117,36 +110,36 @@ The following classes were designed for the bank and its accounts.
 <table class="table-class-diagram">
     <thead>
         <tr>
-            <th class="align-center" colspan="3">Bank</th>
+            <th colspan="3">Bank</th>
         </tr>
     </thead>
     <tbody>
-        <tr class="border-bottom-strong">
+        <tr>
             <td class="tg-o5vb">-</td>
             <td class="tg-o5vb">accounts</td>
             <td class="tg-o5vb">account[]</td>
         </tr>
-        <tr class="border-bottom-none">
+        <tr>
             <td class="tg-73oq">+</td>
             <td class="tg-73oq">getAccounts()</td>
             <td class="tg-73oq">account[]</td>
         </tr>
-        <tr class="border-bottom-none">
+        <tr>
             <td class="tg-73oq">+</td>
             <td class="tg-73oq">createAccount()</td>
             <td class="tg-73oq">boolean</td>
         </tr>
-        <tr class="border-bottom-none">
+        <tr>
             <td class="tg-73oq">+</td>
             <td class="tg-73oq">getStatement(_accountNumber : int)</td>
             <td class="tg-73oq">account</td>
         </tr>
-        <tr class="border-bottom-none">
+        <tr>
             <td class="tg-73oq">+</td>
             <td class="tg-73oq">deposit(_accountNumber : int, _amount : int)</td>
             <td class="tg-73oq">boolean</td>
         </tr>
-        <tr class="border-bottom-none">
+        <tr>
             <td class="tg-73oq">+</td>
             <td class="tg-73oq">withdrawal(_accountNumber : int, _amount : int)</td>
             <td class="tg-73oq">boolean</td>
