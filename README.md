@@ -146,3 +146,25 @@ The following classes were designed for the bank and its accounts.
         </tr>
     </tbody>
 </table>
+
+# Class Model Diagram PlantUML Test
+```plantuml
+@startuml
+class Bank {
+  - accounts: account[]
+
+  + getAccounts(): account[]
+  + createAccount(): boolean
+  + getStatement(_accountNumber: int): account
+  + deposit(_accountNumber: int, _amount: int): boolean
+  + withdrawal(_accountNumber: int, _amount: int): boolean
+}
+
+class account {
+  - accountNumber: int
+  - balance: int
+}
+
+Bank "1" *-- "*" account
+@enduml
+
