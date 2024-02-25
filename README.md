@@ -1,6 +1,19 @@
-# delphiBank
+# delphiBank <!-- omit in toc -->
 
 > A basic banking application made with Delphi
+
+## Contents <!-- omit in toc -->
+
+- [Introduction](#introduction)
+- [Design](#design)
+  - [Unit Tests](#unit-tests)
+    - [Create an account](#create-an-account)
+    - [Make a Deposit](#make-a-deposit)
+    - [Make a Withdrawal](#make-a-withdrawal)
+    - [Generate a mini statement](#generate-a-mini-statement)
+  - [Application Class Models](#application-class-models)
+- [Development](#development)
+- [Outcome](#outcome)
 
 ## Introduction
 
@@ -8,30 +21,30 @@ I was tasked with creating a simple bank server application using a Test-Driven 
 
 Requirements for the application were that it must be simple, use only one currency and the user needed to be able to:
 
-* **Create** new accounts
-* **Deposit** funds into accounts
-* **Withdraw** funds from accounts; and
-* Generate mini bank **statements** for accounts
+- **Create** new accounts
+- **Deposit** funds into accounts
+- **Withdraw** funds from accounts; and
+- Generate mini bank **statements** for accounts
 
 The application was *not* to include:
 
-* **A GUI** - this is a server-only task
-* **A database or storage or storage on-disk** - information must only be stored inside objects for the duration of the test suite
+- **A GUI** - this is a server-only task
+- **A database or storage or storage on-disk** - information must only be stored inside objects for the duration of the test suite
+
+The following two pascal units were required:
+
+1. A test unit
+2. An object-oriented class model
 
 The purposes of this task were to test if I can:
 
 1. Follow a given task and adapt to a new way of development, using an unfamiliar framework ([DUnitX](https://github.com/VSoftTechnologies/DUnitX))
 2. Devise tests to ensure the proper functionality of a program, including:
-   * Does the normal use-case work?
-   * Do certain cases fail (i.e., overdrawing an account)
+   - Does the normal use-case work?
+   - Do certain cases fail (i.e., overdrawing an account)
 3. Design object model classes
 4. Manage the memory usage of a program, ensuring no memory leaks occur
 5. Balance the complexity of a program, ensuring it is neither under nor over-engineered
-
-When developing this application, the following two pascal units were created:
-
-1. The [test unit](#unit-tests)
-2. An [Object-oriented class model](#application-class-models) for the bank and its accounts
 
 ## Design
 
@@ -137,8 +150,10 @@ classDiagram
 
 ## Development
 
-Will update development of the application later
+I developed the application using the free [Community Edition](https://www.embarcadero.com/products/delphi/starter) of Delphi 11 via embarcadero.
+
+I will update development of the application later
 
 ## Outcome
 
-Will update outcome of the application later
+I will update outcome of the application later
