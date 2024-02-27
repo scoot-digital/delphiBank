@@ -1,9 +1,0 @@
-unit Tests;
-
-interface
-
-implementation
-
-    Writeln('Welcome to delphiBank');
-
-end.

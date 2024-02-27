@@ -8,7 +8,6 @@ program delphiBank;
 //  Import required units
 uses
   System.SysUtils,
-  Forms,
   Tests in 'Tests.pas';
 
 
@@ -19,12 +18,13 @@ procedure QuitApplication();
 
   begin
 
+    Writeln;
     Writeln('Thank you for using delphiBank');
-    Writeln('Please press any key to close the program...');
+    Writeln('Please press enter to close the program...');
 
     Readln;
 
-    Application.Terminate;
+    Halt;
 
   end;
 
@@ -42,6 +42,7 @@ procedure NewInteraction();
   begin
 
     //  Ask the user what they would like to do
+    Writeln;
     Writeln('What would you like to do?');
     Writeln('(1 - Create an account, 2 - Make a deposit, 3 - Make a withdrawal, 4 - Generate a statement, Q - Quit application)');
     Readln(UserInput);

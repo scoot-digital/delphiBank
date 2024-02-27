@@ -6,12 +6,14 @@
 
 - [Introduction](#introduction)
 - [Design](#design)
+  - [Program Logical Flow](#program-logical-flow)
+  - [Program Interface](#program-interface)
+  - [Application Class Models](#application-class-models)
   - [Unit Tests](#unit-tests)
     - [Create an Account](#create-an-account)
     - [Make a Deposit](#make-a-deposit)
     - [Make a Withdrawal](#make-a-withdrawal)
     - [Generate a Mini Statement](#generate-a-mini-statement)
-  - [Application Class Models](#application-class-models)
 - [Development](#development)
 - [Outcome](#outcome)
 
@@ -48,6 +50,263 @@ The purposes of this task were to test if I can:
 
 ## Design
 
+### Program Logical Flow
+
+I began designing this system by considering its logical flow - including the sequence of steps taken, decisions made, and actions performed by users when interacting with it. The logical flow of this program is shown in the flowchart below.
+
+```mermaid
+flowchart TD
+
+    start([Start Program])
+
+    welcome[Welcome Message]
+
+    mainMenu[Main Menu]
+
+    createAccount[/Create New Account/]
+
+    openAccount[/Open Existing Account/]
+
+    depositMoney[/Deposit Money/]
+
+    withdrawMoney[/Widthdraw Money/]
+
+    statement[/Print Account Statement/]
+
+    quit([Quit Program])
+
+    start -- Automatically Displayed --> welcome -- Automatically Displayed --> mainMenu -- User Choice --> createAccount & openAccount 
+
+    mainMenu -- User Choice ----> quit   
+    
+    createAccount -- Automatically Displayed --> mainMenu
+
+    openAccount -- User Choice --> mainMenu
+
+    openAccount -- User Choice --> depositMoney & withdrawMoney & statement
+    depositMoney & withdrawMoney & statement -- Automatically Displayed --> openAccount 
+    
+
+```
+
+### Program Interface
+
+After plotting the [logical flow](#program-logical-flow) of the program, I considered how the steps, decisions and actions of the program would be presented to the user. As the task specified there should be no GUI for this program, I decided to use an "interaction system". Each interaction includes one or more sequence/s of:
+
+- A **prompt** - which advises the user what they should / can do next
+- An opportunity for the user to provide some **input** in response to the given prompt
+- **Validation** of the user input - to ensure that the user gave a valid response to the given prompt; and
+- **Confirmation** of the user's success in providing a valid response to the given prompt
+  - **Note**: If the user's response is deemed invalid, the interaction will begin again
+
+The successful completion of each interaction will trigger the initialisation of the next.
+
+The following flowchart translates the program's logical flow into a graphical representation of these "interactions".
+
+```mermaid
+flowchart TB    
+
+    startProcess([Program Start])
+
+    subgraph welcomeInteraction[Welcome Interaction]
+
+        direction TB
+
+        welcomeMessage["#quot;Welcome to delphiBank#quot;"]
+
+    end
+
+    startProcess -- Automatically Displayed --> welcomeInteraction
+
+    subgraph mainMenu[Main Menu]
+
+        direction TB
+
+        mainMenuPrompt["#quot;What would you like to do?#quot;"]
+
+        createAccountOption[/Create a New Account/]
+
+        openAccountOption[/Open an Existing Account/]
+
+        quitProgramOption[/Quit Program/]
+
+        mainMenuPrompt--Automatically Displayed-->createAccountOption & openAccountOption & quitProgramOption
+            
+    end
+
+    welcomeInteraction -- Automatically Displayed ------> mainMenuPrompt
+
+    subgraph createAccountInteraction["Create Account Interaction"]
+
+        direction TB
+
+        namePrompt["#quot;Please enter the account holder's name#quot;"]
+        nameEntry[\Customer Name/]
+        nameValidation{Name Valid?}
+        nameInvalid["#quot;Name Invalid#quot;"]
+        balancePrompt["#quot;Please enter the starting balance of the account#quot;"]
+        balanceEntry[\Starting Balance/]
+        balanceValidation{Balance valid?}
+        balanceInvalid["#quot;Balance Invalid#quot;"]
+        createAccountConfirmation["#quot;Account Created Successfully#quot;"]
+
+        namePrompt -- Automatically Displayed --> nameEntry
+
+        nameEntry -- User Input--> nameValidation
+        nameValidation -- Yes --> balancePrompt
+        nameValidation -- No --> nameInvalid--Automatically Displayed -->namePrompt
+
+        balancePrompt -- Automatically Displayed --> balanceEntry
+        balanceEntry -- User Input --> balanceValidation
+        balanceValidation -- Yes --> createAccountConfirmation
+        balanceValidation -- No --> balanceInvalid--Automatically Displayed -->balancePrompt
+
+    end    
+
+    createAccountOption -- User Choice --> namePrompt
+    createAccountConfirmation --Automatically Displayed--> mainMenuPrompt
+
+    subgraph existingAccountMenu["Existing Account Menu"]
+
+        direction TB
+
+        existingAccountPrompt["#quot;What would you like to do?#quot;"]
+
+        depositMoneyOption{Deposit Money}
+
+        withdrawMoneyOption{Withdraw Money}
+
+        statementOption{Print Account Statement}
+
+        exitOption{Exit to Main Menu}
+
+        existingAccountPrompt--Automatically Displayed-->depositMoneyOption & withdrawMoneyOption & statementOption & exitOption
+        exitOption -- User Choice --> mainMenuPrompt
+       
+
+    end
+
+    openAccountOption -- User Choice --> existingAccountPrompt 
+
+    subgraph withdrawMoneyInteraction[Withdraw Money Interaction]
+
+        direction TB
+    
+        withdrawMoneyPrompt["#quot;How much would you like to Withdraw?#quot;"]
+        withdrawAmountEntry[\Withdraw Amount/]
+        withdrawAmountValidationOne{Amount Valid?}
+        withdrawAmountValidationTwo{Amount Available?}
+        withdrawAmountInvalid["#quot;Amount Invalid#quot;"]
+        withdrawAmountUnavailable["#quot;Amount Unavailable#quot;"]
+        withdrawMoneyConfirmation["#quot;Amount Withdrawn Successfully#quot;"]
+
+        withdrawMoneyPrompt -- Automatically Displayed --> withdrawAmountEntry
+
+        withdrawAmountEntry -- User Input --> withdrawAmountValidationOne
+        withdrawAmountValidationOne -- No --> withdrawAmountInvalid --Automatically Displayed -->withdrawMoneyPrompt
+        withdrawAmountValidationOne -- Yes --> withdrawAmountValidationTwo
+
+        withdrawAmountValidationTwo -- Yes --> withdrawMoneyConfirmation
+        withdrawAmountValidationTwo -- No --> withdrawAmountUnavailable --Automatically Displayed -->withdrawMoneyPrompt
+
+    end
+
+    withdrawMoneyOption -- User Choice --> withdrawMoneyInteraction
+    withdrawMoneyConfirmation-- Automatically Displayed -->existingAccountPrompt
+
+    subgraph depositMoneyInteraction[Deposit Money Interaction]
+
+        direction TB
+    
+        depositMoneyPrompt["#quot;How much would you like to deposit?#quot;"]
+        depositAmountEntry[\Deposit Amount/]
+        depositAmountValidation{Amount Valid?}
+        depositAmountInvalid["#quot;Amount Invalid#quot;"]
+        depositMoneyConfirmation["#quot;Amount Deposited Successfully#quot;"]
+
+        depositMoneyPrompt -- Automatically Displayed --> depositAmountEntry
+
+        depositAmountEntry -- User Input --> depositAmountValidation
+        depositAmountValidation -- No --> depositAmountInvalid --Automatically Displayed -->depositMoneyPrompt
+        depositAmountValidation -- Yes --> depositMoneyConfirmation
+
+    end
+
+    depositMoneyOption -- User Choice --> depositMoneyInteraction
+    depositMoneyConfirmation-- Automatically Displayed -->existingAccountPrompt
+
+    subgraph statementDisplay[Account Statement Display]
+
+        direction TB
+    
+        accountStatement>Account Statement]
+
+    end
+
+    statementOption -- User Choice --> statementDisplay
+    accountStatement-- Automatically Displayed -->existingAccountPrompt
+
+    subgraph quitInteraction["Quit Interaction"]
+
+        direction TB
+
+        quitPrompt["#quot;Thank you for using delphiBank#quot;"]
+        quitInput["#quot;Please press enter to quit#quot;"]
+
+        quitPrompt-- Automatically Displayed -->quitInput
+
+    end  
+
+    endProcess([Program End])
+
+    quitProgramOption -- User Choice ----> quitPrompt
+    quitInput-- User Presses Enter Key ------> endProcess    
+
+```
+
+### Application Class Models
+
+Once the above flowchart was created to demonstrate how users would the [interface](#program-interface) with this program, I was able to design the classes that would be required by the system. The following UML diagram shows these classes and the relationships and cardinality between them.
+
+```mermaid
+classDiagram
+    class Bank{
+        -accounts Account[]
+        +createAccount(_customerName: string, _startingFunds: int) boolean
+        +openAccount(_accountNumber: int) Account[]
+        +quitApplication() void        
+    } 
+    class Account{
+        -accountNumber int
+        -accountOwnerName string
+        -transactionHistory Transaction[]
+        +deposit(amount : int) boolean
+        +withdrawal(_amount : int) boolean
+        +printStatement() void
+    }
+    class Transaction{
+        -transactionID int
+        -date date
+        -type TransactionType
+        -amount int
+        -status string
+        +getTransactionID() int
+        +getDate() date
+        +getType() TransactionType
+        +getAmount() int
+        +getStatus() string
+        +toString() string
+    }
+    class TransactionType {
+        deposit
+        withdrawal
+    }
+  
+    Bank "1" -- "0..*" Account  
+    Transaction "1..*" --> "1" Account
+    TransactionType "1" --> "0..*" Transaction
+```
+
 ### Unit Tests
 
 The following tests were devised to ensure the proper functionality of the banking system.
@@ -81,72 +340,6 @@ The following tests were devised to ensure the proper functionality of the banki
 |---|---|---|---|---|
 |1|Ensure statements are successfully generated|Generate a statement for an account|A statement should be generated|Pass or Fail|
 |2|Ensure statements cannot be created for non-existent accounts|Generate a statement for an account that doesn't exist|Generation of the statement should be denied|Pass or Fail|
-
-### Application Class Models
-
-The following UML diagram shows the classes that were designed for the bank and its accounts. It also shows their relationships and cardinality.
-
-```mermaid
-classDiagram
-    class Bank{
-        -customers Customer[]
-        -accounts Account[]
-        +getCustomers() Customer[]
-        +getAccounts() Account[]
-        +getcustomer(_customerID: int) Customer
-        +getStatement(_accountNumber : int) Account
-        +createAccount(_customerID: int, _startingFunds: int) boolean
-        +deposit(_accountNumber : int, _amount : int) boolean
-        +withdrawal(_accountNumber : int, _amount : int) boolean
-        +toString() string
-    }
-    class Customer{
-        -customerID int
-        -name string
-        -phone int
-        -accounts Account[]
-        +getCustomerID() int
-        +getName() string
-        +getPhone() int
-        +getaccounts() Account[]
-        +toString() string
-    }
-    class Account{
-        -accountNumber int
-        -accountOwnerID int
-        -transactionHistory Transaction[]
-        -balance currency
-        +getAccountNumber() int
-        +getAccountOwnerID() int
-        +getAccountOwner() Customer
-        +getTransactionHistory() Transaction[]
-        +toString() string
-    }
-    class Transaction{
-        -transactionID int
-        -date date
-        -account Account
-        -type TransactionType
-        -amount int
-        -status string
-        +getTransactionID() int
-        +getDate() date
-        +getAccount() Account
-        +getType() TransactionType
-        +getAmount() int
-        +getStatus() string
-        +toString() string
-    }
-    class TransactionType {
-        deposit
-        withdrawal
-    }
-    Bank "1" -- "0..*" Customer
-    Bank "1" -- "0..*" Account
-    Account "1..*" --> "1" Customer
-    Transaction "1..*" --> "1" Account
-    TransactionType "1" --> "0..*" Transaction
-```
 
 ## Development
 

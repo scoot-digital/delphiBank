@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2024/02/25 22:33:52.000.322,D:\Documents\Embarcadero\Studio\Projects\Project1.dproj=D:\Documents\Projects\delphiBank\app\delphiBank.dproj</Transaction>
+    <Transaction>2024/02/25 22:33:52.000.322,D:\Documents\Projects\delphiBank\app\delphiBank.dproj=D:\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
     <Transaction>2024/02/25 23:41:12.000.126,=D:\Documents\Projects\delphiBank\app\Unit1.pas</Transaction>
+    <Transaction>2024/02/26 17:06:17.000.899,D:\Documents\Projects\delphiBank\app\Tests.pas=D:\Documents\Projects\delphiBank\app\Banking.pas</Transaction>
   </Transactions>
 </BorlandProject>
