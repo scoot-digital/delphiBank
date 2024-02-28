@@ -44,7 +44,7 @@ unit Transaction;
           destructor Destroy; override;
           function getAmount: integer;
           function getTransactionType: TTransactionType;
-          function getStatus: TTransactionStatus;
+          function getTransactionStatus: TTransactionStatus;
           function ToString: string; override;
 
     end;
@@ -93,7 +93,7 @@ unit Transaction;
 
 
     //  Implement function to get transaction type
-    function TTransaction.getStatus: TTransactionStatus;
+    function TTransaction.getTransactionStatus: TTransactionStatus;
       begin
 
         Result := self.FStatus;
@@ -105,10 +105,10 @@ unit Transaction;
     function TTransaction.ToString: string;
       begin
 
-        Result := sLineBreak + 'Transaction ID: ' + self.FTransactionID + sLineBreak +
-                  DateTimeToStr(self.FTimestamp) + sLineBreak +
-                  'Type: ' + GetEnumName(TypeInfo(TTransactionType), Ord(self.FTransactionType)) + ', ' +
-                  'Amount: $' + IntToStr(self.FAmount) + sLineBreak +
+        Result := sLineBreak + 'ID: ' + self.FTransactionID + sLineBreak +
+                  'Timestamp: ' + DateTimeToStr(self.FTimestamp) + sLineBreak +
+                  'Type: ' + GetEnumName(TypeInfo(TTransactionType), Ord(self.FTransactionType)) + sLineBreak +
+                  'Amount: ' + IntToStr(self.FAmount) + sLineBreak +
                   'Status: ' + GetEnumName(TypeInfo(TTransactionStatus), Ord(self.FStatus));
 
       end;

@@ -105,7 +105,7 @@ unit Transaction;
     function TTransaction.ToString: string;
       begin
 
-        Result := sLineBreak + 'Transaction ID: ' + self.FTransactionID + sLineBreak +
+        Result := sLineBreak + 'Transaction ID: ' + self.FTransactionID + ' ' +
                   DateTimeToStr(self.FTimestamp) + sLineBreak +
                   'Type: ' + GetEnumName(TypeInfo(TTransactionType), Ord(self.FTransactionType)) + ', ' +
                   'Amount: $' + IntToStr(self.FAmount) + sLineBreak +

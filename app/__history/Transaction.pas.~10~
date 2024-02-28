@@ -42,6 +42,7 @@ unit Transaction;
         public
           constructor Create(ATransactionID: string; ATimeStamp: TDateTime; ATransactionType: TTransactionType; AAmount: integer; AStatus: TTransactionStatus);
           destructor Destroy; override;
+          function getAmount: integer;
           function ToString: string; override;
 
     end;
@@ -51,34 +52,45 @@ unit Transaction;
 
     //  Implement the Bank class
     constructor TTransaction.Create(ATransactionID: string; ATimeStamp: TDateTime; ATransactionType: TTransactionType; AAmount: integer; AStatus: TTransactionStatus);
-    begin
+      begin
 
-      self.FTransactionID:= ATransactionID;
-      self.FTimestamp:= ATimeStamp;
-      self.FTransactionType:= ATransactionType;
-      self.FAmount:= AAmount;
-      self.FStatus:= AStatus
+        self.FTransactionID:= ATransactionID;
+        self.FTimestamp:= ATimeStamp;
+        self.FTransactionType:= ATransactionType;
+        self.FAmount:= AAmount;
+        self.FStatus:= AStatus
 
-    end;
+      end;
 
 
     destructor TTransaction.Destroy;
-    begin
+      begin
 
-      //FOpenAccount.Free;
-      inherited;
+        //FOpenAccount.Free;
+        inherited;
 
-    end;
+      end;
 
+
+    //  Implement function to get amount that was transacted
+    function TTransaction.getAmount: integer;
+      begin
+
+        Result := self.FAmount;
+
+      end;
+
+
+    //  Implement function to print transaction as a string
     function TTransaction.ToString: string;
-    begin
+      begin
 
-      Result := 'ID: ' + self.FTransactionID + sLineBreak +
-                'Timestamp: ' + DateTimeToStr(self.FTimestamp) + sLineBreak +
-                'Type: ' + GetEnumName(TypeInfo(TTransactionType), Ord(self.FTransactionType)) + sLineBreak +
-                'Amount: ' + IntToStr(self.FAmount) + sLineBreak +
-                'Status: ' + GetEnumName(TypeInfo(TTransactionStatus), Ord(self.FStatus));
+        Result := sLineBreak + 'ID: ' + self.FTransactionID + sLineBreak +
+                  'Timestamp: ' + DateTimeToStr(self.FTimestamp) + sLineBreak +
+                  'Type: ' + GetEnumName(TypeInfo(TTransactionType), Ord(self.FTransactionType)) + sLineBreak +
+                  'Amount: ' + IntToStr(self.FAmount) + sLineBreak +
+                  'Status: ' + GetEnumName(TypeInfo(TTransactionStatus), Ord(self.FStatus));
 
-    end;
+      end;
 
 end.

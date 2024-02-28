@@ -105,7 +105,7 @@ unit Bank;
       begin
 
         //  Ask the user what they would like to do
-        Writeln(sLineBreak + 'Currently viewing account no. ' + self.FOpenAccount.GetAccountDetails()[0] + ', owner: ' + self.FOpenAccount.GetAccountDetails()[1]);
+        Writeln(sLineBreak + 'Currently viewing account no. ' + self.FOpenAccount.GetAccountDetails()[0] + ', owner: ' + self.FOpenAccount.GetAccountDetails()[1] + ', available balance: $' + IntToStr(self.FOpenAccount.getBalance));
         Writeln('What would you like to do?');
         Writeln('1 - Make a Deposit');
         Writeln('2 - Make a Withdrawal');

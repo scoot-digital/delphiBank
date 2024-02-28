@@ -82,39 +82,28 @@ unit Account;
       newTransaction: TTransaction;
       transactionID: string;
 
-
     begin
 
-        //  Ask the user what they would like to deposit
-        Writeln;
-        Writeln('Please enter the amount you wish to deposit (in Australian dollars)');
-        Readln(userInput);
+      //  Ask the user what they would like to deposit
+      Writeln(sLineBreak + 'Please enter the amount you wish to deposit (in Australian dollars)');
+      Readln(userInput);
 
-        //  Deposit funds if user input valid
-        if TryStrToInt(userInput, depositAmount) then
+      //  Deposit funds if user input valid
+      if TryStrToInt(userInput, depositAmount) then
 
-          if depositAmount > 0 then
+        if depositAmount > 0 then
 
-            begin
+          begin
 
-              transactionID := IntToStr(self.FAccountNumber) + '-' + IntToStr(self.FTransactionHistory.Count);
+            transactionID := IntToStr(self.FAccountNumber) + '-' + IntToStr(self.FTransactionHistory.Count);
 
-              newTransaction:= TTransaction.Create(transactionID, Now, Deposit, depositAmount, Success);
+            newTransaction:= TTransaction.Create(transactionID, Now, Deposit, depositAmount, Success);
 
-              self.FTransactionHistory.Add(newTransaction);
+            self.FTransactionHistory.Add(newTransaction);
 
-              Writeln('Depositted $' + userInput);
+            Writeln('Depositted $' + userInput);
 
-            end
-
-          else
-
-            begin
-
-              Writeln('Response invalid');
-              self.depositInteraction();
-
-            end
+          end
 
         else
 
@@ -125,15 +114,67 @@ unit Account;
 
           end
 
+      else
+
+        begin
+
+          Writeln('Response invalid');
+          self.depositInteraction();
+
+        end
+
     end;
 
 
     //  Implement withdrawal interaction
     procedure TAccount.withdrawInteraction();
 
+    var
+      userInput: string;
+      withdrawAmount: integer;
+      newTransaction: TTransaction;
+      transactionID: string;
+
     begin
 
+      //  Ask the user what they would like to withdraw
+      Writeln(sLineBreak + 'Please enter the amount you wish to withdraw (in Australian dollars)');
+      Readln(userInput);
 
+      //  Deposit funds if user input valid
+      if TryStrToInt(userInput, withdrawAmount) then
+
+        if withdrawAmount > self.getBalance then
+
+          begin
+
+            transactionID := IntToStr(self.FAccountNumber) + '-' + IntToStr(self.FTransactionHistory.Count);
+
+            newTransaction:= TTransaction.Create(transactionID, Now, Withdrawal, withdrawAmount, Success);
+
+            self.FTransactionHistory.Add(newTransaction);
+
+            Writeln('Withdrew $' + userInput);
+
+          end
+
+        else
+
+          begin
+
+            Writeln('Response invalid');
+            self.withdrawInteraction();
+
+          end
+
+      else
+
+        begin
+
+          Writeln('Response invalid');
+          self.withdrawInteraction();
+
+        end
 
     end;
 
@@ -150,10 +191,9 @@ unit Account;
 
         for transaction in self.FTransactionHistory do
 
-          result := result + transaction.FAmount;
+          if transaction.getTransactionType() = Deposit then
 
-
-
+            result := result + transaction.getAmount();
 
       end;
 
@@ -167,17 +207,17 @@ unit Account;
       begin
 
         //  Notify the user
-        Writeln;
-        Writeln('Printing statement...');
+        Writeln(sLineBreak + 'Printing statement...');
 
-        Writeln;
-        Writeln('Account No. ' + IntToStr(self.FAccountNumber) + ', Owner: ' + self.FAccountOwnerName);
+        Writeln(sLineBreak + 'Account No. ' + IntToStr(self.FAccountNumber) + ', Owner: ' + self.FAccountOwnerName);
         Writeln('Available balance: $' + IntToStr(self.getbalance()));
-        Writeln('Transaction History:');
+        Writeln(sLineBreak + 'Transaction History:');
 
         for transaction in self.FTransactionHistory do
 
-          transaction.ToString()
+          Writeln(transaction.ToString());
+
+        Writeln(sLineBreak + 'End of statement');
 
       end;
 

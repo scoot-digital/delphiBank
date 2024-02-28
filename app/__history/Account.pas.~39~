@@ -95,13 +95,13 @@ unit Account;
 
           begin
 
-            transactionID := IntToStr(self.FAccountNumber) + '-' + IntToStr(self.FTransactionHistory.Count + 1);
+            transactionID := IntToStr(self.FAccountNumber) + '-' + IntToStr(self.FTransactionHistory.Count);
 
             newTransaction:= TTransaction.Create(transactionID, Now, Deposit, depositAmount, Success);
 
             self.FTransactionHistory.Add(newTransaction);
 
-            Writeln('Depositted $' + userInput + ', available balance: $' + IntToStr(self.getBalance));
+            Writeln('Depositted $' + userInput);
 
           end
 
@@ -144,17 +144,17 @@ unit Account;
       //  Deposit funds if user input valid
       if TryStrToInt(userInput, withdrawAmount) then
 
-        if withdrawAmount < self.getBalance then
+        if withdrawAmount > self.getBalance then
 
           begin
 
-            transactionID := IntToStr(self.FAccountNumber) + '-' + IntToStr(self.FTransactionHistory.Count + 1);
+            transactionID := IntToStr(self.FAccountNumber) + '-' + IntToStr(self.FTransactionHistory.Count);
 
             newTransaction:= TTransaction.Create(transactionID, Now, Withdrawal, withdrawAmount, Success);
 
             self.FTransactionHistory.Add(newTransaction);
 
-            Writeln('Withdrew $' + userInput + ', available balance: $' + IntToStr(self.getBalance));
+            Writeln('Withdrew $' + userInput);
 
           end
 
@@ -191,13 +191,9 @@ unit Account;
 
         for transaction in self.FTransactionHistory do
 
-          if (transaction.getTransactionType() = Deposit) and (transaction.getStatus() = Success) then
+          if transaction.getTransactionType = Deposit then
 
-            result := result + transaction.getAmount()
-
-          else if (transaction.getTransactionType() = Withdrawal) and (transaction.getStatus() = Success) then
-
-            result := result - transaction.getAmount()
+            result := result + transaction.getAmount();
 
       end;
 
