@@ -118,7 +118,7 @@ flowchart TB
 
     startProcess -- Automatically Displayed --> welcomeInteraction
 
-    subgraph mainMenu[Main Menu]
+    subgraph mainMenu[Main Menu Interaction]
 
         direction TB
 
@@ -188,7 +188,7 @@ flowchart TB
     openAccountOption -- User Choice --> openAccountPrompt
 
 
-    subgraph existingAccountMenu["Existing Account Menu"]
+    subgraph existingAccountMenu["Existing Account Menu Interaction"]
 
         direction TB
 

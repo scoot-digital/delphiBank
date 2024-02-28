@@ -89,7 +89,9 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="Banking.pas"/>
+        <DCCReference Include="Bank.pas"/>
+        <DCCReference Include="Account.pas"/>
+        <DCCReference Include="Functionality.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

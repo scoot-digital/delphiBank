@@ -8,14 +8,15 @@ program delphiBank;
 //  Import required units
 uses
   System.SysUtils,
-  Banking in 'Banking.pas';
-
+  Bank in 'Bank.pas',
+  Account in 'Account.pas',
+  Functionality in 'Functionality.pas';
 
 //  ----- Global variables  ----- //
 
 var
   //  Initialise new bank class
-  bank: TBank;
+  Bank: TBank;
 
 
 //  ----- Functions ----- //
@@ -42,35 +43,58 @@ procedure QuitApplication();
   Start a new interaction with the user, asking what they would like to do
   @param UserInput (string) - represents what the user would like to do
 }
-procedure NewInteraction();
+procedure MainMenuInteraction();
 
-  var
-  UserInput : string;
-  UserDecision : string;
+    begin
 
-  begin
+      var
+        userInput: string;
 
-    //  Ask the user what they would like to do
-    Writeln;
-    Writeln('What would you like to do?');
-    Writeln('(1 - Create an account');
-    Writeln('(2 - Make a deposit');
-    Writeln('(3 - Make a withdrawal');
-    Writeln('(4 - Generate a statement');
-    Writeln('(Q - Quit application');
-    Readln(UserInput);
+      //  Ask the user what they would like to do
+      Writeln;
+      Writeln('Main Menu');
+      Writeln('What would you like to do?');
+      Writeln('1 - Create a new account');
+      Writeln('2 - Open an existing account');
+      Writeln('Q - Quit application');
+      Readln(userInput);
 
-    //  Set the user's input to lower case
-    UserDecision := LowerCase(UserInput);
+      //  Set the user's input to lower case
+      UserInput := LowerCase(UserInput);
 
-    //  Quit the application
-    if UserDecision = 'q' then
-      QuitApplication()
-    //  If anything else was entered, ask the user to try again
-    else
-      Writeln('Response invalid');
-      NewInteraction();
-  end;
+      //  Quit the application
+      if UserInput = 'q' then
+        QuitApplication()
+
+      //  Create a new account
+      else if UserInput = '1' then
+        Bank.createAccountInteraction()
+
+      //  Open an existing account
+      else if UserInput = '2' then
+
+        begin
+
+          if Bank.getNumAccounts > 0  then
+
+            Bank.openAccountInteraction()
+
+          else
+
+            Writeln('There are no accounts to open');
+
+            MainMenuInteraction()
+
+        end
+
+      //  Handle invalid response
+      else
+
+        Writeln('Response invalid');
+
+      MainMenuInteraction();
+
+    end;
 
 
 //  ----- Main program loop ----- //
@@ -78,11 +102,14 @@ begin
 
   try
 
+    //  Greet the user
+    Writeln('Welcome to delphiBank');
+
     //  Create a new Bank object
-    bank := TBank.Create;
+    Bank := TBank.Create;
 
     //  Begin program main loop
-    NewInteraction();
+    MainMenuInteraction();
 
   except
 

@@ -1,0 +1,17 @@
+unit Functionality;
+
+interface
+
+  procedure isString(AString): Boolean;
+
+implementation
+
+  procedure isString(AString);
+
+  begin
+
+
+
+  end;
+
+end.

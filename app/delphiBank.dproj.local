@@ -1,8 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2024/02/25 22:33:52.000.322,D:\Documents\Projects\delphiBank\app\delphiBank.dproj=D:\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2024/02/25 22:33:52.000.322,D:\Documents\Embarcadero\Studio\Projects\Project1.dproj=D:\Documents\Projects\delphiBank\app\delphiBank.dproj</Transaction>
     <Transaction>2024/02/25 23:41:12.000.126,=D:\Documents\Projects\delphiBank\app\Unit1.pas</Transaction>
-    <Transaction>2024/02/26 17:06:17.000.899,D:\Documents\Projects\delphiBank\app\Tests.pas=D:\Documents\Projects\delphiBank\app\Banking.pas</Transaction>
+    <Transaction>2024/02/26 17:06:17.000.899,D:\Documents\Projects\delphiBank\app\Banking.pas=D:\Documents\Projects\delphiBank\app\Tests.pas</Transaction>
+    <Transaction>2024/02/28 16:35:33.822,D:\Documents\Projects\delphiBank\app\Bank.pas=D:\Documents\Projects\delphiBank\app\Banking.pas</Transaction>
+    <Transaction>2024/02/28 20:14:46.162,=D:\Documents\Projects\delphiBank\app\Unit1.pas</Transaction>
+    <Transaction>2024/02/28 20:14:51.778,D:\Documents\Projects\delphiBank\app\Account.pas=D:\Documents\Projects\delphiBank\app\Unit1.pas</Transaction>
+    <Transaction>2024/02/28 20:55:19.721,=D:\Documents\Projects\delphiBank\app\Unit1.pas</Transaction>
+    <Transaction>2024/02/28 20:55:32.517,D:\Documents\Projects\delphiBank\app\Functionality.pas=D:\Documents\Projects\delphiBank\app\Unit1.pas</Transaction>
   </Transactions>
 </BorlandProject>

@@ -1,0 +1,17 @@
+unit Functionality;
+
+interface
+
+  function isString(AString: string): Boolean;
+
+implementation
+
+  function isString(AString: string): Boolean;
+
+  begin
+
+
+
+  end;
+
+end.

@@ -1,0 +1,33 @@
+unit Functionality;
+
+interface
+
+  function isString(AStringToCheck: string): Boolean;
+
+implementation
+
+  function isString(AStringToCheck: string): Boolean;
+
+  var
+    stringToCheck: string;
+
+  begin
+
+    stringToCheck := AStringToCheck;
+    Result := true;
+
+    for Ch in Input do
+
+      begin
+        if not TCharacter.IsLetter(Ch) then
+
+        begin
+          Result := True;
+          Break;
+        end;
+
+      end;
+
+  end;
+
+end.

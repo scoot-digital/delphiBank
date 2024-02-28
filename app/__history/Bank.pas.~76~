@@ -1,0 +1,224 @@
+{
+  Banking unit
+  Class for base-level banking operations
+  i.e., creating new accounts and opening existing ones
+}
+unit Bank;
+
+  //  Public functions, variables etc.
+  interface
+
+    uses
+    Generics.Collections,
+    System.SysUtils,
+    Account,
+    Functionality;
+
+    type
+
+      {
+        Class for Bank type
+      }
+      TBank = class
+
+        private
+          FAccounts: TList<TAccount>;
+          FOpenAccount: TAccount;
+
+        public
+          constructor Create;
+          destructor Destroy; override;
+          procedure createAccountInteraction();
+          function getNumAccounts(): integer;
+          procedure openAccountInteraction();
+          procedure existingAccountMenuInteraction();
+
+    end;
+
+  //  Unit logic
+  implementation
+
+    //  Implement the Bank class
+    constructor TBank.Create;
+    begin
+
+      self.FAccounts := TList<TAccount>.Create;
+
+    end;
+
+
+    destructor TBank.Destroy;
+    begin
+
+      self.FAccounts.Free;
+      //FOpenAccount.Free;
+      inherited;
+
+    end;
+
+
+    //  Implement menu interaction to create a new account
+    procedure TBank.createAccountInteraction();
+
+      var
+        userInput: string;
+        newAccount: TAccount;
+
+      begin
+
+        //  Ask the user for the account holder's name
+        Writeln;
+        Writeln('Create a new account');
+        Writeln('Please enter the name of the account holder');
+        Readln(userInput);
+
+        //  Create account if user input is valid
+        if isString(userInput) then
+
+          begin
+
+            newAccount := TAccount.Create(self.FAccounts.Count + 1, userInput);
+            self.FAccounts.add(newAccount);
+
+            Writeln('Account  ' + newAccount.getAccountDetails()[0] + '  created for  ' + newAccount.getAccountDetails()[1])
+
+          end
+
+        //  Ask again if user input not valid
+        else
+
+          begin
+
+            Writeln('Response invalid');
+            self.createAccountInteraction();
+
+          end
+
+      end;
+
+
+    //  Implement menu interaction for existing account that has been opened
+    procedure TBank.existingAccountMenuInteraction();
+
+      var
+        userInput: string;
+
+      begin
+
+        //  Ask the user what they would like to do
+        Writeln;
+        Writeln('Currently Viewing Account No. ' + self.FOpenAccount.GetAccountDetails()[0] + ', Owner:  ' + self.FOpenAccount.GetAccountDetails()[1]);
+        Writeln('What would you like to do?');
+        Writeln('1 - Make a Deposit');
+        Writeln('2 - Make a Withdrawal');
+        Writeln('3 - Print Account Statement');
+        Writeln('Q - Return to Main Menu');
+        Readln(userInput);
+
+        //  Go back to the main menu
+        if UserInput = 'q' then
+
+        //  Open the make a deposit interaction
+        else if UserInput = '1' then
+          FOpenAccount.depositInteraction()
+
+        else if UserInput = '2'then
+          FOpenAccount.withdrawInteraction()
+
+        else if UserInput = '3' then
+          FOpenAccount.printStatement()
+
+        //  Ask again if user input not valid
+        else
+
+          begin
+
+            Writeln('Response invalid');
+            self.existingAccountMenuInteraction();
+
+          end
+
+      end;
+
+
+    //  Implement function to return the number of accounts to the open accounts function of the main exe
+    function TBank.getNumAccounts(): integer;
+
+    begin
+
+      Result := self.FAccounts.Count;
+
+    end;
+
+
+    //  Implement interaction to open an existing account
+    procedure TBank.openAccountInteraction();
+
+      var
+        userInput: string;
+        accountNumber: integer;
+        account: TAccount;
+        accountToOpen: TAccount;
+
+      begin
+
+        //  Ask the user what they would like to do
+        Writeln;
+        Writeln('Open an existing account');
+        Writeln('Please enter the account number of the account you wish to open');
+        Readln(userInput);
+
+        //  Set account number if user input valid
+        if TryStrToInt(userInput, accountNumber) then
+
+          begin
+
+            //  Check if account number exists
+            if self.FAccounts.Count >= accountNumber then
+
+              //  Get account with the accounts number specified
+              begin
+
+                for account in self.FAccounts do
+
+                  begin
+
+                    if StrToInt(account.getAccountDetails()[0]) = accountNumber then
+
+                      accountToOpen := account;
+
+                  end;
+
+
+                self.FOpenAccount := accountToOpen;
+                writeln('Opening account...');
+
+                self.existingAccountMenuInteraction();
+
+              end
+
+            //  Ask again if user input not valid
+            else
+
+              begin
+
+                Writeln('Account number does not exist');
+                self.openAccountInteraction();
+
+              end
+
+          end
+
+        //  Ask again if user input not valid
+        else
+
+          begin
+
+            Writeln('Response invalid');
+            self.openAccountInteraction();
+
+          end
+
+      end;
+
+end.

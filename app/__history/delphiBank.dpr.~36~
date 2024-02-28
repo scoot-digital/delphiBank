@@ -1,0 +1,97 @@
+program delphiBank;
+
+{$APPTYPE CONSOLE}
+
+{$R *.res}
+
+
+//  Import required units
+uses
+  System.SysUtils,
+  Bank in 'Bank.pas';
+
+//  ----- Global variables  ----- //
+
+var
+  //  Initialise new bank class
+  Bank: TBank;
+
+
+//  ----- Functions ----- //
+
+{
+  Close the program
+}
+procedure QuitApplication();
+
+  begin
+
+    Writeln;
+    Writeln('Thank you for using delphiBank');
+    Writeln('Please press enter to close the program...');
+
+    Readln;
+
+    Halt;
+
+  end;
+
+
+{
+  Start a new interaction with the user, asking what they would like to do
+  @param UserInput (string) - represents what the user would like to do
+}
+procedure NewInteraction();
+
+    begin
+
+      var
+        userInput, userDecision: string;
+
+      //  Ask the user what they would like to do
+      Writeln;
+      Writeln('What would you like to do?');
+      Writeln('(1- Create a new account');
+      Writeln('(2 - Open an existing account');
+      Writeln('(Q - Quit application');
+      Readln(userInput);
+
+      //  Set the user's input to lower case
+      userDecision := LowerCase(UserInput);
+
+      //  Quit the application
+      if UserDecision = 'q' then
+        QuitApplication()
+
+      if UserDecision = '2' then
+        Bank.openAccountMenu();
+      //  If anything else was entered, ask the user to try again
+      else
+        Writeln('Response invalid');
+        NewInteraction();
+
+    end;
+
+
+//  ----- Main program loop ----- //
+begin
+
+  try
+
+    //  Greet the user
+    Writeln('Welcome to delphiBank');
+
+    //  Create a new Bank object
+    Bank := TBank.Create;
+
+    //  Begin program main loop
+    NewInteraction();
+
+  except
+
+    on E: Exception do
+      Writeln(E.ClassName, ': ', E.Message);
+
+  end;
+
+end.
