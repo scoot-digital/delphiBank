@@ -1,0 +1,96 @@
+{
+  Transaction unit
+  Class for all creating transactions and storing their relevant information
+  i.e., amount, date, time, deposit / widthdrawal and if it was successful
+}
+unit Transaction;
+
+  //  Public functions, variables etc.
+  interface
+
+    uses
+      System.SysUtils,
+      System.TypInfo;
+
+    type
+
+      {
+        Enum for transaction types
+        Possible values - "Deposit" or "Withdrawal"
+      }
+      TTransactionType = (Deposit, Withdrawal);
+
+      {
+        Enum for transaction statuses
+        Possible values - "Success" or "Fail"
+      }
+      TTransactionStatus = (Success, Fail);
+
+
+      {
+        Class for Bank type
+      }
+      TTransaction = class
+
+        private
+          FTransactionID: string;
+          FTimestamp: TDateTime;
+          FTransactionType: TTransactionType;
+          FAmount: integer;
+          FStatus: TTransactionStatus;
+
+        public
+          constructor Create(ATransactionID: string; ATimeStamp: TDateTime; ATransactionType: TTransactionType; AAmount: integer; AStatus: TTransactionStatus);
+          destructor Destroy; override;
+          function getAmount: integer;
+          function ToString: string; override;
+
+    end;
+
+  //  Unit logic
+  implementation
+
+    //  Implement the Bank class
+    constructor TTransaction.Create(ATransactionID: string; ATimeStamp: TDateTime; ATransactionType: TTransactionType; AAmount: integer; AStatus: TTransactionStatus);
+      begin
+
+        self.FTransactionID:= ATransactionID;
+        self.FTimestamp:= ATimeStamp;
+        self.FTransactionType:= ATransactionType;
+        self.FAmount:= AAmount;
+        self.FStatus:= AStatus
+
+      end;
+
+
+    destructor TTransaction.Destroy;
+      begin
+
+        //FOpenAccount.Free;
+        inherited;
+
+      end;
+
+
+    //  Implement function to get amount that was transacted
+    function TTransaction.getAmount: integer;
+      begin
+
+        Result := self.FAmount;
+
+      end;
+
+
+    //  Implement function to print transaction as a string
+    function TTransaction.ToString: string;
+      begin
+
+        Result := sLineBreak + 'ID: ' + self.FTransactionID + sLineBreak +
+                  'Timestamp: ' + DateTimeToStr(self.FTimestamp) + sLineBreak +
+                  'Type: ' + GetEnumName(TypeInfo(TTransactionType), Ord(self.FTransactionType)) + sLineBreak +
+                  'Amount: ' + IntToStr(self.FAmount) + sLineBreak +
+                  'Status: ' + GetEnumName(TypeInfo(TTransactionStatus), Ord(self.FStatus));
+
+      end;
+
+end.

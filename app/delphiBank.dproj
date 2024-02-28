@@ -92,6 +92,7 @@
         <DCCReference Include="Bank.pas"/>
         <DCCReference Include="Account.pas"/>
         <DCCReference Include="Functionality.pas"/>
+        <DCCReference Include="Transaction.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

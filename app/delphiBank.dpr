@@ -10,7 +10,8 @@ uses
   System.SysUtils,
   Bank in 'Bank.pas',
   Account in 'Account.pas',
-  Functionality in 'Functionality.pas';
+  Functionality in 'Functionality.pas',
+  Transaction in 'Transaction.pas';
 
 //  ----- Global variables  ----- //
 
@@ -28,8 +29,7 @@ procedure QuitApplication();
 
   begin
 
-    Writeln;
-    Writeln('Thank you for using delphiBank');
+    Writeln(sLineBreak + 'Thank you for using delphiBank');
     Writeln('Please press enter to close the program...');
 
     Readln;
@@ -51,8 +51,7 @@ procedure MainMenuInteraction();
         userInput: string;
 
       //  Ask the user what they would like to do
-      Writeln;
-      Writeln('Main Menu');
+      Writeln(sLineBreak + 'Main Menu');
       Writeln('What would you like to do?');
       Writeln('1 - Create a new account');
       Writeln('2 - Open an existing account');

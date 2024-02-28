@@ -143,23 +143,14 @@ flowchart TB
         namePrompt["#quot;Please enter the account holder's name#quot;"]
         nameEntry[\Customer Name/]
         nameValidation{Name Valid?}
-        nameInvalid["#quot;Name Invalid#quot;"]
-        balancePrompt["#quot;Please enter the starting balance of the account#quot;"]
-        balanceEntry[\Starting Balance/]
-        balanceValidation{Balance valid?}
-        balanceInvalid["#quot;Balance Invalid#quot;"]
+        nameInvalid["#quot;Name Invalid#quot;"]        
         createAccountConfirmation["#quot;Account Created Successfully#quot;"]
 
         namePrompt -- Automatically Displayed --> nameEntry
 
         nameEntry -- User Input--> nameValidation
-        nameValidation -- Yes --> balancePrompt
+        nameValidation -- Yes --> createAccountConfirmation
         nameValidation -- No --> nameInvalid--Automatically Displayed -->namePrompt
-
-        balancePrompt -- Automatically Displayed --> balanceEntry
-        balanceEntry -- User Input --> balanceValidation
-        balanceValidation -- Yes --> createAccountConfirmation
-        balanceValidation -- No --> balanceInvalid--Automatically Displayed -->balancePrompt
 
     end    
 

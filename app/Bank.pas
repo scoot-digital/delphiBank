@@ -28,10 +28,10 @@ unit Bank;
         public
           constructor Create;
           destructor Destroy; override;
-          procedure createAccountInteraction();
-          function getNumAccounts(): integer;
-          procedure openAccountInteraction();
-          procedure existingAccountMenuInteraction();
+          procedure createAccountInteraction;
+          function getNumAccounts: integer;
+          procedure openAccountInteraction;
+          procedure existingAccountMenuInteraction;
 
     end;
 
@@ -40,21 +40,21 @@ unit Bank;
 
     //  Implement the Bank class
     constructor TBank.Create;
-    begin
+      begin
 
-      self.FAccounts := TList<TAccount>.Create;
+        self.FAccounts := TList<TAccount>.Create;
 
-    end;
+      end;
 
 
     destructor TBank.Destroy;
-    begin
+      begin
 
-      self.FAccounts.Free;
-      //FOpenAccount.Free;
-      inherited;
+        self.FAccounts.Free;
+        //FOpenAccount.Free;
+        inherited;
 
-    end;
+      end;
 
 
     //  Implement menu interaction to create a new account
@@ -67,8 +67,7 @@ unit Bank;
       begin
 
         //  Ask the user for the account holder's name
-        Writeln;
-        Writeln('Create a new account');
+        Writeln(sLineBreak + 'Create a new account');
         Writeln('Please enter the name of the account holder');
         Readln(userInput);
 
@@ -106,8 +105,7 @@ unit Bank;
       begin
 
         //  Ask the user what they would like to do
-        Writeln;
-        Writeln('Currently Viewing Account No. ' + self.FOpenAccount.GetAccountDetails()[0] + ', Owner: ' + self.FOpenAccount.GetAccountDetails()[1]);
+        Writeln(sLineBreak + 'Currently viewing account no. ' + self.FOpenAccount.GetAccountDetails()[0] + ', owner: ' + self.FOpenAccount.GetAccountDetails()[1]);
         Writeln('What would you like to do?');
         Writeln('1 - Make a Deposit');
         Writeln('2 - Make a Withdrawal');
@@ -181,8 +179,7 @@ unit Bank;
       begin
 
         //  Ask the user what they would like to do
-        Writeln;
-        Writeln('Open an existing account');
+        Writeln(sLineBreak + 'Open an existing account');
         Writeln('Please enter the account number of the account you wish to open');
         Readln(userInput);
 

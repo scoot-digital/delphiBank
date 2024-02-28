@@ -12,7 +12,8 @@ unit Account;
 
     uses
     Generics.Collections,
-    System.SysUtils;
+    System.SysUtils,
+    Transaction;
 
     type
 
@@ -24,15 +25,16 @@ unit Account;
         private
           FAccountNumber: integer;
           FAccountOwnerName: string;
-          FTransactionHistory: TList<string>;
+          FTransactionHistory: TList<TTransaction>;
 
         public
           constructor Create(AAccountNumber: integer; AAccountOwnerName: string);
           destructor Destroy; override;
-          function getAccountDetails(): TList<String>;
-          procedure depositInteraction();
-          procedure withdrawInteraction();
-          procedure printStatement();
+          function getAccountDetails: TList<String>;
+          procedure depositInteraction;
+          procedure withdrawInteraction;
+          function getBalance: integer;
+          procedure printStatement;
 
     end;
 
@@ -40,22 +42,22 @@ unit Account;
 
     //  Implement the Account class
     constructor TAccount.Create(AAccountNumber: integer; AAccountOwnerName: string);
-    begin
+      begin
 
-      self.FAccountNumber := AAccountNumber;
-      self.FAccountOwnerName := AAccountOwnerName;
-      self.FTransactionHistory := TList<string>.create();
+        self.FAccountNumber := AAccountNumber;
+        self.FAccountOwnerName := AAccountOwnerName;
+        self.FTransactionHistory := TList<TTransaction>.create();
 
-    end;
+      end;
 
 
     destructor TAccount.Destroy;
-    begin
+      begin
 
-      FTransactionHistory.Free;
-      inherited;
+        FTransactionHistory.Free;
+        inherited;
 
-    end;
+      end;
 
 
     //  Implement method to return account number and owner for the banking class' open account interaction
@@ -77,40 +79,32 @@ unit Account;
     var
       userInput: string;
       depositAmount: integer;
-      depositDetails: string;
+      newTransaction: TTransaction;
+      transactionID: string;
+
 
     begin
 
-        //  Initialise variable storing deposit details
-        depositDetails := 'Deposit: ';
+      //  Ask the user what they would like to deposit
+      Writeln(sLineBreak + 'Please enter the amount you wish to deposit (in Australian dollars)');
+      Readln(userInput);
 
-        //  Ask the user what they would like to deposit
-        Writeln;
-        Writeln('Please enter the amount you wish to deposit (in Australian dollars)');
-        Readln(userInput);
+      //  Deposit funds if user input valid
+      if TryStrToInt(userInput, depositAmount) then
 
-        //  Deposit funds if user input valid
-        if TryStrToInt(userInput, depositAmount) then
+        if depositAmount > 0 then
 
-          if depositAmount > 0 then
+          begin
 
-            begin
+            transactionID := IntToStr(self.FAccountNumber) + '-' + IntToStr(self.FTransactionHistory.Count);
 
-              depositDetails := depositDetails + userInput;
-              self.FTransactionHistory.Add(depositDetails);
+            newTransaction:= TTransaction.Create(transactionID, Now, Deposit, depositAmount, Success);
 
-              Writeln('Depositted $' + userInput);
+            self.FTransactionHistory.Add(newTransaction);
 
-            end
+            Writeln('Depositted $' + userInput);
 
-          else
-
-            begin
-
-              Writeln('Response invalid');
-              self.depositInteraction();
-
-            end
+          end
 
         else
 
@@ -120,6 +114,15 @@ unit Account;
             self.depositInteraction();
 
           end
+
+      else
+
+        begin
+
+          Writeln('Response invalid');
+          self.depositInteraction();
+
+        end
 
     end;
 
@@ -134,13 +137,44 @@ unit Account;
     end;
 
 
-    //  Implement interaction to print statement
+    //  Implement function to calculate available balance
+    function TAccount.getBalance(): integer;
+
+      var
+        transaction: TTransaction;
+
+      begin
+
+        Result:= 0;
+
+        for transaction in self.FTransactionHistory do
+
+          result := result + transaction.getAmount();
+
+      end;
+
+
+    //  Implement procedure to print statement
     procedure TAccount.printStatement();
 
-    begin
+      var
+        transaction: TTransaction;
 
+      begin
 
+        //  Notify the user
+        Writeln(sLineBreak + 'Printing statement...');
 
-    end;
+        Writeln(sLineBreak + 'Account No. ' + IntToStr(self.FAccountNumber) + ', Owner: ' + self.FAccountOwnerName);
+        Writeln('Available balance: $' + IntToStr(self.getbalance()));
+        Writeln(sLineBreak + 'Transaction History:');
+
+        for transaction in self.FTransactionHistory do
+
+          Writeln(transaction.ToString());
+
+        Writeln(sLineBreak + 'End of statement');
+
+      end;
 
 end.
