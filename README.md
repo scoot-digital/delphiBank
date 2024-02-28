@@ -8,12 +8,12 @@
 - [Design](#design)
   - [Program Logical Flow](#program-logical-flow)
   - [Program Interface](#program-interface)
-  - [Application Class Models](#application-class-models)
+  - [Class Models](#class-models)
   - [Unit Tests](#unit-tests)
-    - [Create an Account](#create-an-account)
-    - [Make a Deposit](#make-a-deposit)
-    - [Make a Withdrawal](#make-a-withdrawal)
-    - [Generate a Mini Statement](#generate-a-mini-statement)
+    - [1. Create an Account](#1-create-an-account)
+    - [2. Make a Deposit](#2-make-a-deposit)
+    - [3. Make a Withdrawal](#3-make-a-withdrawal)
+    - [4. Generate a Mini Statement](#4-generate-a-mini-statement)
 - [Development](#development)
 - [Outcome](#outcome)
 
@@ -166,6 +166,28 @@ flowchart TB
     createAccountOption -- User Choice --> namePrompt
     createAccountConfirmation --Automatically Displayed--> mainMenuPrompt
 
+    subgraph openAccountInteraction[Open Account Interaction]
+
+        direction TB
+
+        openAccountPrompt['Please enter the account number of the account you wish to open']
+        openAccountEntry[\Account Number/]
+        openAccountValidation{Account Number Valid?}
+        openAccountInvalid['Account Number Invalid']
+        openAccountConfirmation['Opening account __account number__']
+
+        openAccountPrompt -- Automatically Displayed --> openAccountEntry
+
+        openAccountEntry -- User Input --> openAccountValidation
+        openAccountValidation -- Yes --> openAccountConfirmation
+        openAccountValidation -- No --> openAccountInvalid
+        openAccountInvalid -- Automatically Displayed --> openAccountPrompt
+
+    end
+
+    openAccountOption -- User Choice --> openAccountPrompt
+
+
     subgraph existingAccountMenu["Existing Account Menu"]
 
         direction TB
@@ -181,12 +203,12 @@ flowchart TB
         exitOption{Exit to Main Menu}
 
         existingAccountPrompt--Automatically Displayed-->depositMoneyOption & withdrawMoneyOption & statementOption & exitOption
-        exitOption -- User Choice --> mainMenuPrompt
-       
+        exitOption -- User Choice --> mainMenuPrompt       
 
     end
 
-    openAccountOption -- User Choice --> existingAccountPrompt 
+    openAccountConfirmation -- Automatically Displayed --> existingAccountPrompt
+
 
     subgraph withdrawMoneyInteraction[Withdraw Money Interaction]
 
@@ -243,7 +265,7 @@ flowchart TB
 
     end
 
-    statementOption -- User Choice --> statementDisplay
+    statementOption -- User Choice --> accountStatement
     accountStatement-- Automatically Displayed -->existingAccountPrompt
 
     subgraph quitInteraction["Quit Interaction"]
@@ -264,7 +286,7 @@ flowchart TB
 
 ```
 
-### Application Class Models
+### Class Models
 
 Once the above flowchart was created to demonstrate how users would the [interface](#program-interface) with this program, I was able to design the classes that would be required by the system. The following UML diagram shows these classes and the relationships and cardinality between them.
 
@@ -272,8 +294,9 @@ Once the above flowchart was created to demonstrate how users would the [interfa
 classDiagram
     class Bank{
         -accounts Account[]
+        -openAccount Account
         +createAccount(_customerName: string, _startingFunds: int) boolean
-        +openAccount(_accountNumber: int) Account[]
+        +setOpenAccount(_accountNumber: int) Account[]
         +quitApplication() void        
     } 
     class Account{
@@ -289,12 +312,7 @@ classDiagram
         -date date
         -type TransactionType
         -amount int
-        -status string
-        +getTransactionID() int
-        +getDate() date
-        +getType() TransactionType
-        +getAmount() int
-        +getStatus() string
+        -status string   
         +toString() string
     }
     class TransactionType {
@@ -309,37 +327,36 @@ classDiagram
 
 ### Unit Tests
 
-The following tests were devised to ensure the proper functionality of the banking system.
+Finally, after creating [models](#class-models) for the classes of this program, I was able to write tests to ensure the proper functionality of the banking system. Tests for the 4 main interaction requirements of the program are presented below.
 
-#### Create an Account
-
-|Test No.|Description|Test Instructions|Expected Result|Status|
-|---|---|---|---|---|
-|1|Ensure new accounts are successfully created|Create an account for a new customer|A new account should be created|Pass or Fail|
-|2|Ensure duplicate accounts cannot be created|Create a duplicate account for an already-existing customer|Creation of the account should be denied|Pass or Fail|
-
-#### Make a Deposit
+#### 1. Create an Account
 
 |Test No.|Description|Test Instructions|Expected Result|Status|
 |---|---|---|---|---|
-|1|Ensure funds are able to be deposited into existing customer accounts|Deposit funds into a customer's account|A deposit should be made into the account|Pass or Fail|
-|2|Ensure funds cannot be made into non-existent accounts|Attempt to make a deposit into an account that doesn't exist|The deposit should be denied|Pass or Fail|
-|3|Ensure only funds in positive numbers can be deposited|Attempt to make a deposit into an account using a number equal to or less than 0|The deposit should be denied|Pass or Fail|
+|1|Ensure new accounts are successfully created when a valid names and starting balances are given|Create an account for a customer with a valid name|A new account should be created|Pass or Fail|
+|2|Ensure new accounts are not created when invalid names are given|Create an account for a customer with an invalid name|A new account should not be created|Pass or Fail|
+|3|Ensure new accounts are not created when invalid starting balances are given|Create an account for a customer with an invalid starting balance|A new account should not be created|Pass or Fail|
 
-#### Make a Withdrawal
+#### 2. Make a Deposit
 
 |Test No.|Description|Test Instructions|Expected Result|Status|
 |---|---|---|---|---|
-|1|Ensure funds are able to be withdrawn from existing customer accounts|Withdraw funds from a customer's account|A withdrawal should be made from the account|Pass or Fail|
-|2|Ensure funds cannot be withdrawn from non-existent accounts|Attempt to make a withdrawal from an account that doesn't exist|The withdrawal should be denied|Pass or Fail|
-|3|Ensure only funds in postive numbers can be withdrawn|Attempt to make a withdrawal from an account using a number equal to or less than 0|The withdrawal should be denied|Pass or Fail|
+|1|Ensure valid funds are able to be deposited into accounts|Deposit valid funds into an account|A deposit should be made successfully|Pass or Fail|
+|2|Ensure invalid funds cannot be deposited|Attempt to make a deposit into an account using a number equal to or less than 0|The deposit should be denied|Pass or Fail|
 
-#### Generate a Mini Statement
+#### 3. Make a Withdrawal
+
+|Test No.|Description|Test Instructions|Expected Result|Status|
+|---|---|---|---|---|
+|1|Ensure valid funds are able to be withdrawn from accounts|Withdraw valid funds from an account|A withdrawal should be made successfully|Pass or Fail|
+|2|Ensure invalid funds cannot be withdrawn|Attempt to make a withdrawl from an account using a number equal to or less than 0|The withdrawal should be denied|Pass or Fail|
+|3|Ensure customers cannot overdraw accounts|Attempt to make a withdrawal from an account using a number which is higher than the account's available balance|The withdrawal should be denied|Pass or Fail|
+
+#### 4. Generate a Mini Statement
 
 |Test No.|Description|Test Instructions|Expected Result|Status|
 |---|---|---|---|---|
 |1|Ensure statements are successfully generated|Generate a statement for an account|A statement should be generated|Pass or Fail|
-|2|Ensure statements cannot be created for non-existent accounts|Generate a statement for an account that doesn't exist|Generation of the statement should be denied|Pass or Fail|
 
 ## Development
 
