@@ -79,7 +79,7 @@ unit Bank;
             newAccount := TAccount.Create(self.FAccounts.Count + 1, userInput);
             self.FAccounts.add(newAccount);
 
-            Writeln('Account  ' + newAccount.getAccountDetails()[0] + '  created for  ' + newAccount.getAccountDetails()[1])
+            Writeln('Account ' + newAccount.getAccountDetails()[0] + ' created for ' + newAccount.getAccountDetails()[1])
 
           end
 

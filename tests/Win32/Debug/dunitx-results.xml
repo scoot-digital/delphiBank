@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<test-results name="D:\Documents\Embarcadero\Studio\Projects\Win32\Debug\Project1.exe" total="0" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2024-02-29" time="0.000">
+  <culture-info current-culture="en" current-uiculture="en" />
+  <test-suite type="Assembly" name="Project1.exe" executed="true" result="Success" success="True" time="0.000" asserts="0">
+    <results>
+    </results>
+  </test-suite>
+</test-results>
